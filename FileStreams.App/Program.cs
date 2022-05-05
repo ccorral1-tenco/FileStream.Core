@@ -32,7 +32,9 @@ namespace FileStreams.App
 
             var photo = new Photo
             {
-                Title = "A view of the room", Description = "A beautiful room with wonderful views of the neighbours walls", RoomId = room.Id
+                Title = "A view of the room", 
+                Description = "A beautiful room with wonderful views of the neighbours walls", 
+                RoomId = room.Id
             };
 
             const string roomPhoto = @"Pictures\roomview.jpg";
