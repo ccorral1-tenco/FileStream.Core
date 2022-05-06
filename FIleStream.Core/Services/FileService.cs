@@ -12,15 +12,38 @@ using System.Threading.Tasks;
 
 namespace FileStream.Core.Services
 {
+    /// <summary>
+    /// Represents a repository service for the model <see cref="Photo"/>
+    /// </summary>
     public class FileService : IRepository<Models.File>
     {
+        /// <summary>
+        /// The query string used to retrieve data location of the file
+        /// managed by the filestream functionality of sql server
+        /// </summary>
         private const string RowDataStatement = @"SELECT Data.PathName() AS 'Path', GET_FILESTREAM_TRANSACTION_CONTEXT() AS 'Transaction' FROM {0} WHERE Id = @id";
+        /// <summary>
+        /// A simple service provider
+        /// </summary>
         private readonly IServiceScopeFactory _scopeFactory;
+        /// <summary>
+        /// The table name
+        /// </summary>
         private readonly string _fileTableName = "dbo.[File]";
+        /// <summary>
+        /// Represents a repository service for the model <see cref="Photo"/>
+        /// </summary>
+        /// <param name="scopeFactory">The service provider</param>
         public FileService(IServiceScopeFactory scopeFactory)
         {
             _scopeFactory = scopeFactory;
         }
+        /// <summary>
+        /// Fetch all photo models found, this call
+        /// purposely ignores the file data, since this
+        /// could result in an slow fetch
+        /// </summary>
+        /// <returns>A list of the photo entities found</returns>
         public IList<Models.File> GetAll()
         {
             using (var scope = _scopeFactory.CreateScope())
@@ -37,6 +60,12 @@ namespace FileStream.Core.Services
                     .ToList();
             }
         }
+        /// <summary>
+        /// Fetch an entity by its id, the filestream data is
+        /// separately fetched using a memory stream
+        /// </summary>
+        /// <param name="id">The id of the entity to fetch</param>
+        /// <returns>The found entity</returns>
         public Models.File GetById(int id)
         {
             using (var scope = _scopeFactory.CreateScope())
@@ -76,6 +105,12 @@ namespace FileStream.Core.Services
                 return photo;
             }
         }
+        /// <summary>
+        /// Insert a new entity
+        /// </summary>
+        /// <param name="entity">The entity to insert</param>
+        /// <param name="file">The file related to that entity to insert</param>
+        /// <returns>The task</returns>
         public async Task Insert(Models.File entity, IFormFile file)
         {
             using (var scope = _scopeFactory.CreateScope())
@@ -91,6 +126,7 @@ namespace FileStream.Core.Services
                 }
             }
         }
+        /// <inheritdoc/>
         public void Delete(int id)
         {
             using (var scope = _scopeFactory.CreateScope())
@@ -100,6 +136,13 @@ namespace FileStream.Core.Services
                 context.SaveChanges();
             }
         }
+        /// <summary>
+        /// Save the file related to the photo model data
+        /// </summary>
+        /// <param name="context">The context to use</param>
+        /// <param name="id">The id of the entity related to the file to be saved</param>
+        /// <param name="file">The file itself</param>
+        /// <returns></returns>
         private async Task SavePhotoData(FileStreamContext context, int id, IFormFile file)
         {
             var selectStatement = string.Format(RowDataStatement, _fileTableName);

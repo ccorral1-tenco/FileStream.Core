@@ -6,8 +6,12 @@ using System.Linq;
 
 namespace FileStream.Core.Services
 {
+    /// <summary>
+    /// This filter allows swagger to enable form-data to be upload
+    /// </summary>
     public class SwaggerFileOperationFilter : IOperationFilter
     {
+        /// <inheritdoc/>
         public void Apply(OpenApiOperation operation, OperationFilterContext context)
         {
             var fileUploadMime = "multipart/form-data";

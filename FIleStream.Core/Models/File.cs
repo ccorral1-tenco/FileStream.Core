@@ -39,7 +39,13 @@ namespace FileStream.Core.Models
             /// The data.
             /// </value>
             public byte[] Data { get; set; }
+            /// <summary>
+            /// This is a REQUIRED id for Filestream to work
+            /// </summary>
             public Guid FileId { get; set; }
+            /// <summary>
+            /// The mime type of the file to upload
+            /// </summary>
             public string MimeType { get; set; }
     }
 }
