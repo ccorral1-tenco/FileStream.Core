@@ -132,3 +132,4 @@ GO
 - [FILESTREAM in SQL Server](https://www.sqlshack.com/filestream-in-sql-server/).
 - [Enable and configure FILESTREAM](https://docs.microsoft.com/en-us/sql/relational-databases/blob/enable-and-configure-filestream?view=sql-server-ver15)
 - [FILESTREAM (SQL Server)](https://docs.microsoft.com/en-us/sql/relational-databases/blob/filestream-sql-server?view=sql-server-ver15)
+- [Example using SQL file streams](https://github.com/dazfuller/FileStreams)
