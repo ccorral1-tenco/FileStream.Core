@@ -25,7 +25,7 @@ namespace FileStream.Core
         public void ConfigureServices(IServiceCollection services)
         {
             var optionsBuilder = new DbContextOptionsBuilder<FileStreamContext>();
-            var connectionString = "data source=.;initial catalog=Filestream;User ID=sa;Password='Tenco1234';MultipleActiveResultSets=true;Integrated Security = true";
+            var connectionString = "data source=.;initial catalog=FileStream.Test;User ID=sa;Password='Tenco1234';MultipleActiveResultSets=true;Integrated Security = true";
 
             // Add and configure suppliers context
             services.AddDbContext<FileStreamContext>(o =>
