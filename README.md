@@ -13,6 +13,9 @@ This project:
 - [Content](#content)
 - [Before using FILESTREAM](#before-using-filestream)
 - [Usage](#usage)
+  - [Windows authentication configuration](#windows-authentication-configuration)
+  - [FILESTREAM configuration](#filestream-configuration)
+  - [Database and project configuration](#database-and-project-configuration)
 - [References](#references)
 
 ## Before using FILESTREAM
@@ -59,7 +62,7 @@ Before running any project, make sure the Windows user you use in IIS for you ap
 
 Now the user can connect to both IIS and SQL Server.
 
-### SQL Server configuration
+### FILESTREAM configuration
 
 Now that you assigned the user to your server, the next thing to do is to configure **Sql Server** to use FILESTREAM.  We can enable the FILESTREAM feature differently in SQL Server.
 
