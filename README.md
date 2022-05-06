@@ -35,9 +35,33 @@ Example of a connection string:
 
 ## Usage
 
+### Windows authentication configuration
+
+Before running any project, make sure the Windows user you use in IIS for you application pool and for your web site can login to your SQL Server instance. To do that, follow these steps:
+
+1. Create a new login on the `Security` section of your server instance using the Windows username used by IIS:
+
+<p align="center">
+  <img src="./files/user_configuration.png" width=400>
+</p>
+
+2. Click on `Search`, then type the username in the box and click `Check Names`
+
+<p align="center">
+  <img src="./files/user_configuration_2.png" width=400>
+</p>
+
+3. Add permissions to your server instance. Right click on the **Server > Permissions > Search > Browse > Select the user** (You will notice that now the user you created is available in the list). In this same window you can assign different permissions to this user.
+
+<p align="center">
+  <img src="./files/user_configuration_3.png" width=600>
+</p>
+
+Now the user can connect to both IIS and SQL Server.
+
 ### SQL Server configuration
 
-The first thing to do is to configure **Sql Server**.  We can enable the FILESTREAM feature differently in SQL Server.
+Now that you assigned the user to your server, the next thing to do is to configure **Sql Server** to use FILESTREAM.  We can enable the FILESTREAM feature differently in SQL Server.
 
 **Option 1.** During Installation: You can configure FILESTREAM during the SQL Server installation. However, I do not recommend doing it during the installation because we can later enable it as per our requirements
 
