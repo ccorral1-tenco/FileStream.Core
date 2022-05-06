@@ -12,16 +12,27 @@ using Microsoft.OpenApi.Models;
 
 namespace FileStream.Core
 {
+    /// <summary>
+    /// The startup class
+    /// </summary>
     public class Startup
     {
+        /// <summary>
+        /// The default constructor
+        /// </summary>
+        /// <param name="configuration"></param>
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
+        /// <summary>
+        /// The configuration accessor
+        /// </summary>
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to add services to the container.
+        /// </summary>
+        /// <param name="services">The service collection</param>
         public void ConfigureServices(IServiceCollection services)
         {
             var optionsBuilder = new DbContextOptionsBuilder<FileStreamContext>();
@@ -45,8 +56,11 @@ namespace FileStream.Core
                 c.OperationFilter<SwaggerFileOperationFilter>();
             });
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// <summary>
+        /// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        /// </summary>
+        /// <param name="app">The app builder</param>
+        /// <param name="env">The environment accessor</param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseDeveloperExceptionPage();
