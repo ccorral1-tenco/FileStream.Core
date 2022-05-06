@@ -9,6 +9,30 @@ This project:
 - Makes the assumption the database and the project are in the same host.
 - Makes the assumption no firewall is blocking communication between the project, sql server and the files location.
 
+## Content
+- [Content](#content)
+- [Before using FILESTREAM](#before-using-filestream)
+- [Usage](#usage)
+- [References](#references)
+
+## Before using FILESTREAM
+
+- We can use the SELECT, INSERT, UPDATE, and DELETE statements similar to a standard database query in FILESTREAM
+- We should use FILESTREAM if the object size is larger than 1 MB on average
+- Each row should have a unique row ID to use this functionality, and it should not contain NULL values
+- We can create the FILESTREAM filegroup on the compressed volume as well
+- In the Failover clustering, we need to use a shared disk for the FILESTREAM filegroup
+- We can add multiple data containers in the FILESTREAM filegroup
+- We cannot encrypt FILESTREAM data
+- You cannot use SQL logins with the FILESTREAM container
+- When using connection strings, they must always have Integrated Security, as this is a requirement to use FILESTREAM. 
+
+Example of a connection string:
+
+```csharp
+"data source=.;initial catalog=Filestream;User ID=sa;Password='1234';MultipleActiveResultSets=true;Integrated Security = true"
+```
+
 ## Usage
 
 ### SQL Server configuration
@@ -63,17 +87,6 @@ The meaning for the value 2 is as follow:
  If you do not enable FILESTREAM using the SQL Server Configuration Manager, You can get the error message
 
 > FILESTREAM feature could not be initialized. The operating system Administrator must enable FILESTREAM on the instance using Configuration Manager.
-
-### Important points to consider while using the SQL Server FILESTREAM feature
-
-- We can use the SELECT, INSERT, UPDATE, and DELETE statements similar to a standard database query in FILESTREAM
-- We should use FILESTREAM if the object size is larger than 1 MB on average
-- Each row should have a unique row ID to use this functionality, and it should not contain NULL values
-- We can create the FILESTREAM filegroup on the compressed volume as well
-- In the Failover clustering, we need to use a shared disk for the FILESTREAM filegroup
-- We can add multiple data containers in the FILESTREAM filegroup
-- We cannot encrypt FILESTREAM data
-- You cannot use SQL logins with the FILESTREAM container
 
 ### Database and project configuration
 
