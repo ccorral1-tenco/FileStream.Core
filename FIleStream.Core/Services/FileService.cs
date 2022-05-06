@@ -52,6 +52,7 @@ namespace FileStream.Core.Services
                 return context.Photos
                     .Select(p => new Models.File() 
                     { 
+                        Id = p.Id,
                         Title = p.Title,
                         Description = p.Description,
                         MimeType = p.MimeType
@@ -110,7 +111,7 @@ namespace FileStream.Core.Services
         /// <param name="entity">The entity to insert</param>
         /// <param name="file">The file related to that entity to insert</param>
         /// <returns>The task</returns>
-        public async Task Insert(Models.File entity, IFormFile file)
+        public async Task<Models.File> Insert(Models.File entity, IFormFile file)
         {
             using (var scope = _scopeFactory.CreateScope())
             using (var context = scope.ServiceProvider.GetRequiredService<FileStreamContext>())
@@ -122,6 +123,7 @@ namespace FileStream.Core.Services
                     context.SaveChanges();
                     await SavePhotoData(context, entity.Id, file);
                     transaction.Commit();
+                    return entity;
                 }
             }
         }

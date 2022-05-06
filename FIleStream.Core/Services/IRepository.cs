@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FileStream.Core.Models;
+using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -27,7 +28,7 @@ namespace FileStream.Core.Services
         /// <param name="entity">The entity to insert</param>
         /// <param name="file">The file related to the entity to fetch</param>
         /// <returns>A task</returns>
-        Task Insert(T entity, IFormFile file);
+        Task<File> Insert(T entity, IFormFile file);
         /// <summary>
         /// Delete an entity by its id
         /// </summary>

@@ -64,7 +64,7 @@ namespace FileStream.Core
         {
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
-            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FIleStream.Core v1"));
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "FileStream.Core v1"));
 
             app.UseRouting();
 

@@ -31,6 +31,10 @@ namespace FileStream.Core.Controllers
             _fileService = fileService;
         }
         [HttpGet]
+        /// <summary>
+        /// A simple call to download a photo
+        /// </summary>
+        /// <returns>A file</returns>
         public IActionResult GetFile(int id)
         {
             var result = _fileService.GetById(id);
@@ -62,8 +66,8 @@ namespace FileStream.Core.Controllers
                 Data = new byte[0x00],
                 MimeType = file.ContentType
             };
-            await _fileService.Insert(fileModel, file);
-            return Ok();
+            var newFile = await _fileService.Insert(fileModel, file);
+            return Json(new { newFile.Id, newFile.Title, newFile.Description, newFile.MimeType });
         }
         /// <summary>
         /// Use this call to delete a given file by its id
@@ -74,7 +78,7 @@ namespace FileStream.Core.Controllers
         public IActionResult DeleteFile(int id)
         {
             _fileService.Delete(id);
-            return Ok();
+            return Ok("El archivo fue borrado con exito!");
         }
     }
 }
