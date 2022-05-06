@@ -16,7 +16,7 @@ namespace FileStream.Core.Services
     {
         private const string RowDataStatement = @"SELECT Data.PathName() AS 'Path', GET_FILESTREAM_TRANSACTION_CONTEXT() AS 'Transaction' FROM {0} WHERE Id = @id";
         private readonly IServiceScopeFactory _scopeFactory;
-        private readonly string _fileTableName = "dbo.Photo";
+        private readonly string _fileTableName = "dbo.File";
         public FileService(IServiceScopeFactory scopeFactory)
         {
             _scopeFactory = scopeFactory;
