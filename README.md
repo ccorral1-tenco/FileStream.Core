@@ -125,7 +125,11 @@ CREATE TABLE [File]
 GO
 ```
 
-4. Now you are ready to run your project.
+4. Now you are ready to run your project. Regardless of the method, once your project is running, go to the page `http://[YOUR_IP]/swagger/index.html`, where `[YOUR_IP]` represents whatever ip you are currently using for your project. Once there, you should be able to play with some simple CRUD operations on a simple model. The possible actions are:
+- Get a list of metadata of current files in your database
+- Get a single file
+- Upload a file
+- Download a file
 
 ## References
 
