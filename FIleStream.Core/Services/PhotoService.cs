@@ -5,6 +5,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.Data.SqlTypes;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -21,13 +22,22 @@ namespace FileStream.Core.Services
         {
             _scopeFactory = scopeFactory;
         }
-        //public IList<Photo> GetAll()
-        //{
-        //    using (var context = new FileStreamContext())
-        //    {
-        //        return context.Photos.ToList();
-        //    }
-        //}
+        public IList<Photo> GetAll()
+        {
+            using (var scope = _scopeFactory.CreateScope())
+            using (var context = scope.ServiceProvider.GetRequiredService<FileStreamContext>())
+            {
+
+                return context.Photos
+                    .Select(p => new Photo() 
+                    { 
+                        Title = p.Title,
+                        Description = p.Description,
+                        MimeType = p.MimeType
+                    })
+                    .ToList();
+            }
+        }
 
         public Photo GetById(int id)
         {
@@ -69,21 +79,6 @@ namespace FileStream.Core.Services
             }
         }
 
-        //public void Update(Photo entity)
-        //{
-        //    using (var context = new FileStreamContext())
-        //    {
-        //        using (var tx = new TransactionScope())
-        //        {
-        //            context.Entry(entity).State = EntityState.Modified;
-        //            context.SaveChanges();
-
-        //            SavePhotoData(context, entity);
-
-        //            tx.Complete();
-        //        }
-        //    }
-        //}
 
         public async Task Insert(Photo entity, IFormFile file)
         {
@@ -101,14 +96,15 @@ namespace FileStream.Core.Services
             }
         }
 
-        //public void Delete(int id)
-        //{
-        //    using (var context = new FileStreamContext())
-        //    {
-        //        context.Entry(new Photo { Id = id }).State = EntityState.Deleted;
-        //        context.SaveChanges();
-        //    }
-        //}
+        public void Delete(int id)
+        {
+            using (var scope = _scopeFactory.CreateScope())
+            using (var context = scope.ServiceProvider.GetRequiredService<FileStreamContext>())
+            {
+                context.Entry(new Photo { Id = id }).State = EntityState.Deleted;
+                context.SaveChanges();
+            }
+        }
 
         private async Task SavePhotoData(FileStreamContext context, int id, IFormFile file)
         {

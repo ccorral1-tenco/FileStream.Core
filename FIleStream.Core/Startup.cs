@@ -3,6 +3,7 @@ using FileStream.Core.Models;
 using FileStream.Core.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +33,10 @@ namespace FileStream.Core
                 contextLifetime: ServiceLifetime.Transient
             );
 
+            services.Configure<KestrelServerOptions>(options =>
+            {
+                options.Limits.MaxRequestBodySize = int.MaxValue; // if don't set default value is: 30 MB
+            });
             services.AddTransient<IRepository<Photo>, PhotoService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>

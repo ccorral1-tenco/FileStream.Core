@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace FileStream.Core.Controllers
 {
@@ -21,7 +22,12 @@ namespace FileStream.Core.Controllers
         public IActionResult GetPhoto(int id)
         {
             var result = _photoService.GetById(id);
-            return Ok(result);
+            return File(result.Data, Application.Octet, result.Title);
+        }
+        [HttpGet("All")]
+        public IActionResult GetAllPhotos()
+        {
+            return Ok(_photoService.GetAll());
         }
         [HttpPost]
         public async Task<IActionResult> UploadPhoto([FromForm] IFormFile file)
@@ -29,11 +35,19 @@ namespace FileStream.Core.Controllers
             var guid = Guid.NewGuid();
             var photo = new Photo()
             {
-                Description = $"Hola ${guid}",
-                Title = $"Titulo ${DateTime.Now}",
+                Description = file.Name,
+                Title = file.FileName,
                 FileId = guid,
+                Data = new byte[0x00],
+                MimeType = file.ContentType
             };
             await _photoService.Insert(photo, file);
+            return Ok();
+        }
+        [HttpDelete]
+        public IActionResult DeletePhoto(int id)
+        {
+            _photoService.Delete(id);
             return Ok();
         }
     }

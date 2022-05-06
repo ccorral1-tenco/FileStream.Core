@@ -40,5 +40,6 @@ namespace FileStream.Core.Models
             /// </value>
             public byte[] Data { get; set; }
             public Guid FileId { get; set; }
+            public string MimeType { get; set; }
     }
 }
