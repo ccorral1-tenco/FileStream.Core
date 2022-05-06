@@ -20,7 +20,7 @@ The first thing to do is to configure **Sql Server**.  We can enable the FILESTR
 **Option 2.** SQL Server Configuration Manager: In the SQL Server Configuration Manager (**start -> Programs -> SQL Server Configuration Manager**), go to SQL Server properties In the SQL Server properties, you can see a tab `FILESTREAM`.
 
 <p align="center">
-  <img src="files/filestream_configuration.PNG" width=400>
+  <img src="./files/filestream_configuration.PNG" width=400>
 </p>
 
 Any of those configurations requires to follow the next steps:
@@ -28,7 +28,7 @@ Any of those configurations requires to follow the next steps:
 1. Click on `FILESTREAM`, and you get below screen. Here you can see that this feature is not enabled by default.
 
 <p align="center">
-  <img src="files/filestream_configuration_2.PNG" width=400>
+  <img src="./files/filestream_configuration_2.PNG" width=400>
 </p>
 
 2. Put a tick in the checkbox `Enable FILESTREAM for Transact-SQL access`.
@@ -38,7 +38,7 @@ Any of those configurations requires to follow the next steps:
 4. Specify the Windows share name and allow remote client access for this FILESTREAM data.
 
 <p align="center">
-  <img src="files/filestream_configuration_3.PNG" width=400>
+  <img src="./files/filestream_configuration_3.PNG" width=400>
 </p>
 
 5. Click Apply to activate the FILESTREAM feature in SQL Server. You will get a prompt to restart the SQL Server service. Once we have enabled FILESTREAM access and restarted SQL Server, we also need to specify the access level using SSMS. We need to make changes in sp_configure to apply this setting. 
