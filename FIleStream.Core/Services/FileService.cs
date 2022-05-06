@@ -1,5 +1,4 @@
 ﻿using FileStream.Core.Contexts;
-using FileStream.Core.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
 using Microsoft.Data.SqlTypes;
@@ -142,7 +141,7 @@ namespace FileStream.Core.Services
         /// <param name="context">The context to use</param>
         /// <param name="id">The id of the entity related to the file to be saved</param>
         /// <param name="file">The file itself</param>
-        /// <returns></returns>
+        /// <returns>The task</returns>
         private async Task SavePhotoData(FileStreamContext context, int id, IFormFile file)
         {
             var selectStatement = string.Format(RowDataStatement, _fileTableName);
