@@ -12,24 +12,23 @@ using System.Threading.Tasks;
 
 namespace FileStream.Core.Services
 {
-    public class PhotoService : IRepository<Photo>
+    public class FileService : IRepository<Models.File>
     {
         private const string RowDataStatement = @"SELECT Data.PathName() AS 'Path', GET_FILESTREAM_TRANSACTION_CONTEXT() AS 'Transaction' FROM {0} WHERE Id = @id";
-
         private readonly IServiceScopeFactory _scopeFactory;
-
-        public PhotoService(IServiceScopeFactory scopeFactory)
+        private readonly string _fileTableName = "dbo.Photo";
+        public FileService(IServiceScopeFactory scopeFactory)
         {
             _scopeFactory = scopeFactory;
         }
-        public IList<Photo> GetAll()
+        public IList<Models.File> GetAll()
         {
             using (var scope = _scopeFactory.CreateScope())
             using (var context = scope.ServiceProvider.GetRequiredService<FileStreamContext>())
             {
 
                 return context.Photos
-                    .Select(p => new Photo() 
+                    .Select(p => new Models.File() 
                     { 
                         Title = p.Title,
                         Description = p.Description,
@@ -38,8 +37,7 @@ namespace FileStream.Core.Services
                     .ToList();
             }
         }
-
-        public Photo GetById(int id)
+        public Models.File GetById(int id)
         {
             using (var scope = _scopeFactory.CreateScope())
             using (var context = scope.ServiceProvider.GetRequiredService<FileStreamContext>())
@@ -52,7 +50,7 @@ namespace FileStream.Core.Services
 
                 using var transaction = context.Database.BeginTransaction();
                 {
-                    var selectStatement = string.Format(RowDataStatement, "dbo.Photo");
+                    var selectStatement = string.Format(RowDataStatement, _fileTableName);
 
                     var rowData = context.RowDatas
                         .FromSqlRaw(selectStatement, new SqlParameter("@id", id))
@@ -78,9 +76,7 @@ namespace FileStream.Core.Services
                 return photo;
             }
         }
-
-
-        public async Task Insert(Photo entity, IFormFile file)
+        public async Task Insert(Models.File entity, IFormFile file)
         {
             using (var scope = _scopeFactory.CreateScope())
             using (var context = scope.ServiceProvider.GetRequiredService<FileStreamContext>())
@@ -95,20 +91,18 @@ namespace FileStream.Core.Services
                 }
             }
         }
-
         public void Delete(int id)
         {
             using (var scope = _scopeFactory.CreateScope())
             using (var context = scope.ServiceProvider.GetRequiredService<FileStreamContext>())
             {
-                context.Entry(new Photo { Id = id }).State = EntityState.Deleted;
+                context.Entry(new Models.File { Id = id }).State = EntityState.Deleted;
                 context.SaveChanges();
             }
         }
-
         private async Task SavePhotoData(FileStreamContext context, int id, IFormFile file)
         {
-            var selectStatement = string.Format(RowDataStatement, "dbo.Photo");
+            var selectStatement = string.Format(RowDataStatement, _fileTableName);
 
             var rowData = context.RowDatas
                 .FromSqlRaw(selectStatement, new SqlParameter("@id", id))

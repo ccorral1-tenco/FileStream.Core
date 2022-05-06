@@ -13,12 +13,12 @@ namespace FileStream.Core.Contexts
         //    Configuration.ProxyCreationEnabled = false;
         //}
 
-        public virtual DbSet<Photo> Photos { get; set; }
+        public virtual DbSet<File> Photos { get; set; }
         public virtual DbSet<FileStreamRowData> RowDatas { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Photo>().Metadata.SetIsTableExcludedFromMigrations(true);
+            modelBuilder.Entity<File>().Metadata.SetIsTableExcludedFromMigrations(true);
             modelBuilder.Entity<FileStreamRowData>().HasNoKey();
         }
     }

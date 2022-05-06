@@ -37,7 +37,7 @@ namespace FileStream.Core
             {
                 options.Limits.MaxRequestBodySize = int.MaxValue; // if don't set default value is: 30 MB
             });
-            services.AddTransient<IRepository<Photo>, PhotoService>();
+            services.AddTransient<IRepository<File>, FileService>();
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {

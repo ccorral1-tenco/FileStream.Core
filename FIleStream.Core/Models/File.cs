@@ -6,8 +6,8 @@ namespace FileStream.Core.Models
         /// <summary>
         /// Defines a photo
         /// </summary>
-        [Table("Photo", Schema = "dbo")]
-        public class Photo
+        [Table("File", Schema = "dbo")]
+        public class File
         {
             /// <summary>
             /// Gets or sets the identifier.

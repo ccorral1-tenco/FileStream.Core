@@ -10,30 +10,30 @@ namespace FileStream.Core.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class PhotoController : Controller
+    public class FileController : Controller
     {
-        private readonly IRepository<Photo> _photoService;
+        private readonly IRepository<File> _fileService;
 
-        public PhotoController(IRepository<Photo> photoService)
+        public FileController(IRepository<File> fileService)
         {
-            _photoService = photoService;
+            _fileService = fileService;
         }
         [HttpGet]
-        public IActionResult GetPhoto(int id)
+        public IActionResult GetFile(int id)
         {
-            var result = _photoService.GetById(id);
+            var result = _fileService.GetById(id);
             return File(result.Data, Application.Octet, result.Title);
         }
         [HttpGet("All")]
-        public IActionResult GetAllPhotos()
+        public IActionResult GetAllFiles()
         {
-            return Ok(_photoService.GetAll());
+            return Ok(_fileService.GetAll());
         }
         [HttpPost]
-        public async Task<IActionResult> UploadPhoto([FromForm] IFormFile file)
+        public async Task<IActionResult> UploadFile([FromForm] IFormFile file)
         {
             var guid = Guid.NewGuid();
-            var photo = new Photo()
+            var photo = new File()
             {
                 Description = file.Name,
                 Title = file.FileName,
@@ -41,13 +41,13 @@ namespace FileStream.Core.Controllers
                 Data = new byte[0x00],
                 MimeType = file.ContentType
             };
-            await _photoService.Insert(photo, file);
+            await _fileService.Insert(photo, file);
             return Ok();
         }
         [HttpDelete]
-        public IActionResult DeletePhoto(int id)
+        public IActionResult DeleteFile(int id)
         {
-            _photoService.Delete(id);
+            _fileService.Delete(id);
             return Ok();
         }
     }
